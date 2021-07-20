@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.13.0
+    restart: always
+    ports:
+    - 9200:9200
+
+  app:
+    build:
+      context: .
+    ports:
+    - 8080:8080
+    restart: always
+    depends_on:
+      - elasticsearch
