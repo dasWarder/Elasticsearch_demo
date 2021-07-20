@@ -29,7 +29,7 @@ public class ArticleController {
     @GetMapping
     public ResponseEntity getFilteredInfo(@RequestParam("query") String query) throws IOException {
 
-        List<ArticleDto> search = articleService.search(query);
+        List<Article> search = articleService.search(query);
 
         return ResponseEntity.ok()
                              .body(search);

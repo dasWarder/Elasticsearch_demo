@@ -44,11 +44,15 @@ public class ArticleElasticsearchService implements ArticleService {
 
         Article stored = articleRepository.save(article);
 
+        IndexRequest indexRequest = new IndexRequest();
+        indexRequest.id(stored.getId());
+        indexRequest.source(mapper.writeValueAsString(indexRequest),  XContentType.JSON);
+
         return stored;
     }
 
     @Override
-    public List<ArticleDto> search(String query) throws IOException {
+    public List<Article> search(String query) throws IOException {
 
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -56,15 +60,15 @@ public class ArticleElasticsearchService implements ArticleService {
 
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = elasticClient.search(searchRequest, RequestOptions.DEFAULT);
-        List<ArticleDto> articles = new ArrayList<>();
+        List<Article> articles = new ArrayList<>();
 
         for(SearchHit hit: searchResponse.getHits()) {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
 
-            ArticleDto articleDto = new ArticleDto();
-            articleDto.setTitle((String) sourceAsMap.get("title"));
-            articleDto.setText((String) sourceAsMap.get("text"));
-            articles.add(articleDto);
+            Article article = new Article();
+            article.setTitle((String) sourceAsMap.get("title"));
+            article.setText((String) sourceAsMap.get("text"));
+            articles.add(article);
         }
 
         return articles;

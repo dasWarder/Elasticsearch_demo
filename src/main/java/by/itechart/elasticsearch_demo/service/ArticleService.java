@@ -10,6 +10,6 @@ public interface ArticleService {
 
     Article saveArticle(ArticleDto dto) throws IOException;
 
-    List<ArticleDto> search(String query) throws IOException;
+    List<Article> search(String query) throws IOException;
 
 }
