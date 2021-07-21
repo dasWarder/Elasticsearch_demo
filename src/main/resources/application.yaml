@@ -1,1 +1,9 @@
-
+spring:
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+  spring:
+    jackson:
+      deserialization:
+        FAIL_ON_UNKNOWN_PROPERTIES: false
