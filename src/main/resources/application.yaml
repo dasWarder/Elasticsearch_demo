@@ -7,3 +7,6 @@ spring:
     jackson:
       deserialization:
         FAIL_ON_UNKNOWN_PROPERTIES: false
+
+elasticsearch:
+  url: localhost:9200
